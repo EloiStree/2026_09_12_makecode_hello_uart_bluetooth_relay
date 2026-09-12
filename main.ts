@@ -1,3 +1,15 @@
+function disable_all_pin () {
+    pins.digitalWritePin(DigitalPin.P0, 0)
+    pins.digitalWritePin(DigitalPin.P1, 0)
+    pins.digitalWritePin(DigitalPin.P2, 0)
+    pins.digitalWritePin(DigitalPin.P3, 0)
+    pins.digitalWritePin(DigitalPin.P8, 0)
+    pins.digitalWritePin(DigitalPin.P12, 0)
+    pins.digitalWritePin(DigitalPin.P13, 0)
+    pins.digitalWritePin(DigitalPin.P14, 0)
+    pins.digitalWritePin(DigitalPin.P15, 0)
+    pins.digitalWritePin(DigitalPin.P16, 0)
+}
 bluetooth.onBluetoothConnected(function () {
     basic.showLeds(`
         . . . . .
@@ -16,11 +28,30 @@ bluetooth.onBluetoothDisconnected(function () {
         . . . . .
         `)
 })
+input.onButtonPressed(Button.A, function () {
+    enable_all_pin()
+})
+function enable_all_pin () {
+    pins.digitalWritePin(DigitalPin.P0, 1)
+    pins.digitalWritePin(DigitalPin.P1, 1)
+    pins.digitalWritePin(DigitalPin.P2, 1)
+    pins.digitalWritePin(DigitalPin.P3, 1)
+    pins.digitalWritePin(DigitalPin.P8, 1)
+    pins.digitalWritePin(DigitalPin.P12, 1)
+    pins.digitalWritePin(DigitalPin.P13, 1)
+    pins.digitalWritePin(DigitalPin.P14, 1)
+    pins.digitalWritePin(DigitalPin.P15, 1)
+    pins.digitalWritePin(DigitalPin.P16, 1)
+}
 bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function () {
     list_data_received.push(bluetooth.uartReadUntil(serial.delimiters(Delimiters.NewLine)))
 })
+input.onButtonPressed(Button.B, function () {
+    disable_all_pin()
+})
 let process_data_received = ""
 let list_data_received: string[] = []
+let time_between_tick_test = 1000
 bluetooth.startUartService()
 bluetooth.setTransmitPower(7)
 basic.showLeds(`
@@ -31,10 +62,46 @@ basic.showLeds(`
     # # # # #
     `)
 basic.forever(function () {
-    basic.pause(100)
+    basic.pause(time_between_tick_test)
     pins.digitalWritePin(DigitalPin.P0, 0)
-    basic.pause(100)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P1, 0)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P2, 0)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P3, 0)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P8, 0)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P12, 0)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P13, 0)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P14, 0)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P15, 0)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P16, 0)
+    basic.pause(time_between_tick_test)
     pins.digitalWritePin(DigitalPin.P0, 1)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P1, 1)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P2, 1)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P3, 1)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P8, 1)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P12, 1)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P13, 1)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P14, 1)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P15, 1)
+    basic.pause(time_between_tick_test)
+    pins.digitalWritePin(DigitalPin.P16, 1)
 })
 basic.forever(function () {
 	
@@ -96,6 +163,12 @@ basic.forever(function () {
     }
     if (process_data_received == "p2") {
         pins.analogWritePin(AnalogPin.P2, 0)
+    }
+    if (process_data_received == "PA") {
+        enable_all_pin()
+    }
+    if (process_data_received == "pa") {
+        disable_all_pin()
     }
 })
 /**
