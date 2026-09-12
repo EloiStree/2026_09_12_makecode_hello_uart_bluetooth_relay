@@ -1,3 +1,40 @@
+/**
+ * Pin	Digital Analog write (PWM)	Notes
+ * 
+ * P0	✅	✅	General purpose
+ * 
+ * P1	✅	✅	General purpose
+ * 
+ * P2	✅	✅	General purpose
+ * 
+ * P3	⚠️	⚠️	Used by LED matrix
+ * 
+ * P4	⚠️	⚠️	Used by LED matrix
+ * 
+ * P5	⚠️	⚠️	Button A
+ * 
+ * P6	⚠️	⚠️	LED matrix
+ * 
+ * P7	⚠️	⚠️	LED matrix
+ * 
+ * P8	✅	❌	Digital only
+ * 
+ * P9	⚠️	⚠️	LED matrix
+ * 
+ * P10	⚠️	⚠️	LED matrix
+ * 
+ * P11	⚠️	⚠️	Button B
+ * 
+ * P12	✅	❌	Digital only
+ * 
+ * P13	✅	❌	SPI
+ * 
+ * P14	✅	❌	SPI
+ * 
+ * P15	✅	❌	SPI
+ * 
+ * P16	✅	❌	Digital only
+ */
 function disable_all_pin () {
     pins.digitalWritePin(DigitalPin.P0, 0)
     pins.digitalWritePin(DigitalPin.P1, 0)
@@ -113,7 +150,67 @@ basic.forever(function () {
 })
 basic.forever(function () {
     if (list_data_received.length > 0) {
-        process_data_received = list_data_received.pop()
+        process_data_received = list_data_received.shift()
+    }
+    if (process_data_received == "G0") {
+        pins.analogWritePin(AnalogPin.P0, 1023)
+    }
+    if (process_data_received == "g0") {
+        pins.analogWritePin(AnalogPin.P0, 0)
+    }
+    if (process_data_received == "G1") {
+        pins.analogWritePin(AnalogPin.P1, 1023)
+    }
+    if (process_data_received == "g1") {
+        pins.analogWritePin(AnalogPin.P1, 0)
+    }
+    if (process_data_received == "G2") {
+        pins.analogWritePin(AnalogPin.P2, 1023)
+    }
+    if (process_data_received == "g2") {
+        pins.analogWritePin(AnalogPin.P2, 0)
+    }
+    if (process_data_received == "G3") {
+        pins.digitalWritePin(DigitalPin.P8, 1)
+    }
+    if (process_data_received == "g3") {
+        pins.digitalWritePin(DigitalPin.P8, 0)
+    }
+    if (process_data_received == "G4") {
+        pins.digitalWritePin(DigitalPin.P12, 1)
+    }
+    if (process_data_received == "g4") {
+        pins.digitalWritePin(DigitalPin.P12, 0)
+    }
+    if (process_data_received == "G5") {
+        pins.digitalWritePin(DigitalPin.P13, 1)
+    }
+    if (process_data_received == "g5") {
+        pins.digitalWritePin(DigitalPin.P13, 0)
+    }
+    if (process_data_received == "G6") {
+        pins.digitalWritePin(DigitalPin.P14, 1)
+    }
+    if (process_data_received == "g6") {
+        pins.digitalWritePin(DigitalPin.P14, 0)
+    }
+    if (process_data_received == "G7") {
+        pins.digitalWritePin(DigitalPin.P15, 1)
+    }
+    if (process_data_received == "g7") {
+        pins.digitalWritePin(DigitalPin.P15, 0)
+    }
+    if (process_data_received == "G8") {
+        pins.digitalWritePin(DigitalPin.P16, 1)
+    }
+    if (process_data_received == "g8") {
+        pins.digitalWritePin(DigitalPin.P16, 0)
+    }
+    if (process_data_received == "GA") {
+        enable_all_pin()
+    }
+    if (process_data_received == "ga") {
+        disable_all_pin()
     }
     if (process_data_received == "P8") {
         pins.digitalWritePin(DigitalPin.P8, 1)
@@ -181,50 +278,18 @@ basic.forever(function () {
     if (process_data_received == "loop") {
         loop_test = 0
     }
-})
-/**
- * Pin	Digital Analog write (PWM)	Notes
- * 
- * P0	✅	✅	General purpose
- * 
- * P1	✅	✅	General purpose
- * 
- * P2	✅	✅	General purpose
- * 
- * P3	⚠️	⚠️	Used by LED matrix
- * 
- * P4	⚠️	⚠️	Used by LED matrix
- * 
- * P5	⚠️	⚠️	Button A
- * 
- * P6	⚠️	⚠️	LED matrix
- * 
- * P7	⚠️	⚠️	LED matrix
- * 
- * P8	✅	❌	Digital only
- * 
- * P9	⚠️	⚠️	LED matrix
- * 
- * P10	⚠️	⚠️	LED matrix
- * 
- * P11	⚠️	⚠️	Button B
- * 
- * P12	✅	❌	Digital only
- * 
- * P13	✅	❌	SPI
- * 
- * P14	✅	❌	SPI
- * 
- * P15	✅	❌	SPI
- * 
- * P16	✅	❌	Digital only
- */
-basic.forever(function () {
-	
+    if (0 == process_data_received.indexOf("P0V")) {
+        pins.analogWritePin(AnalogPin.P0, parseFloat(process_data_received.substr(0, process_data_received.length - -3)))
+    }
+    if (0 == process_data_received.indexOf("P1V")) {
+        pins.analogWritePin(AnalogPin.P1, parseFloat(process_data_received.substr(0, process_data_received.length - -3)))
+    }
+    if (0 == process_data_received.indexOf("P2V")) {
+        pins.analogWritePin(AnalogPin.P2, parseFloat(process_data_received.substr(0, process_data_received.length - -3)))
+    }
 })
 basic.forever(function () {
-	
-})
-basic.forever(function () {
-	
+    if (list_data_received.length > 0) {
+        process_data_received = list_data_received.pop()
+    }
 })
