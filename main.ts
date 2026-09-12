@@ -54,6 +54,7 @@ let list_data_received: string[] = []
 let time_between_tick_test = 1000
 bluetooth.startUartService()
 bluetooth.setTransmitPower(7)
+let loop_test = 0
 basic.showLeds(`
     # # # # #
     # . . . #
@@ -62,46 +63,50 @@ basic.showLeds(`
     # # # # #
     `)
 basic.forever(function () {
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P0, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P1, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P2, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P3, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P8, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P12, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P13, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P14, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P15, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P16, 0)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P0, 1)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P1, 1)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P2, 1)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P3, 1)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P8, 1)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P12, 1)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P13, 1)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P14, 1)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P15, 1)
-    basic.pause(time_between_tick_test)
-    pins.digitalWritePin(DigitalPin.P16, 1)
+    if (loop_test) {
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P1, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P2, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P3, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P8, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P12, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P13, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P14, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P15, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P16, 0)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P0, 1)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P1, 1)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P2, 1)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P3, 1)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P8, 1)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P12, 1)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P13, 1)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P14, 1)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P15, 1)
+        basic.pause(time_between_tick_test)
+        pins.digitalWritePin(DigitalPin.P16, 1)
+    } else {
+    	
+    }
 })
 basic.forever(function () {
 	
@@ -169,6 +174,12 @@ basic.forever(function () {
     }
     if (process_data_received == "pa") {
         disable_all_pin()
+    }
+    if (process_data_received == "LOOP") {
+        loop_test = 1
+    }
+    if (process_data_received == "loop") {
+        loop_test = 0
     }
 })
 /**
